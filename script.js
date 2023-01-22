@@ -1,18 +1,17 @@
 const bookContainer = document.querySelector(".book-container");
 
-const submitBtn = document.querySelector("submit-btn");
+const submitBtn = document.querySelector(".submit-btn");
 
 let myLibrary = [];
 
+// Auto populate array for testing
 addBookToLibrary(
   "Do Androids Dream of Electric Sheep?",
   "Phillip K. Dick",
   208,
   false
 );
-
 addBookToLibrary("Lord of The Rings", "J.R.R. Tolkien", 469, false);
-
 addBookToLibrary(
   "Harry Potter and the Cursed Child",
   "J.K. Rowling",
@@ -21,6 +20,21 @@ addBookToLibrary(
 );
 
 updateBooks();
+
+// Disable submite button default functionality
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const pages = document.getElementById("pages").value;
+  const haveRead = document.getElementById("have-read").value;
+
+  document.getElementById("add-book-form").reset();
+
+  addBookToLibrary(title, author, pages, haveRead == "on");
+  updateBooks();
+});
 
 function Book(title, author, pages, haveRead) {
   this.title = title;
@@ -81,7 +95,6 @@ function createBookCard(bookIndex) {
 
 function updateBooks() {
   bookContainer.textContent = "";
-
   for (let i = 0; i < myLibrary.length; i++) {
     createBookCard(i);
   }
