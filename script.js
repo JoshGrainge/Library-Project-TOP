@@ -63,8 +63,12 @@ function createBookCard(bookIndex) {
 
   removeButton.addEventListener("click", () => {
     const id = removeButton.parentElement.getAttribute("data-id");
-    console.log(id);
     removeBookFromLibrary(id);
+  });
+
+  readToggle.addEventListener("change", (e) => {
+    const id = removeButton.parentElement.getAttribute("data-id");
+    myLibrary[id].haveRead = e.target.checked;
   });
 
   cardContainer.dataset.id = bookIndex;
