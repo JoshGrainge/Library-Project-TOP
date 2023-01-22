@@ -1,5 +1,6 @@
 const bookContainer = document.querySelector(".book-container");
-console.log(bookContainer);
+
+const submitBtn = document.querySelector("submit-btn");
 
 let myLibrary = [];
 
@@ -21,10 +22,6 @@ addBookToLibrary(
 
 updateBooks();
 
-console.log(myLibrary[0]);
-console.log(myLibrary[1]);
-console.log(myLibrary[2]);
-
 function Book(title, author, pages, haveRead) {
   this.title = title;
   this.author = author;
@@ -36,7 +33,12 @@ function addBookToLibrary(title, author, pages, haveRead) {
   myLibrary.push(new Book(title, author, pages, haveRead));
 }
 
-function createBookCard(book) {
+function removeBookFromLibrary(index) {
+  myLibrary.splice(index, 1);
+  updateBooks();
+}
+
+function createBookCard(bookIndex) {
   const cardContainer = document.createElement("div");
   const removeButton = document.createElement("button");
   const title = document.createElement("p");
@@ -45,9 +47,13 @@ function createBookCard(book) {
   const readLabel = document.createElement("p");
   const readToggle = document.createElement("input");
 
-  // TODO make remove button remove button
-  //removeButton.addEventListener("click", removeBook());
+  removeButton.addEventListener("click", () => {
+    const id = removeButton.parentElement.getAttribute("data-id");
+    console.log(id);
+    removeBookFromLibrary(id);
+  });
 
+  cardContainer.dataset.id = bookIndex;
   readToggle.type = "checkbox";
 
   cardContainer.classList.add("card-container");
@@ -57,11 +63,11 @@ function createBookCard(book) {
   pages.classList.add("pages");
 
   removeButton.textContent = "X";
-  title.textContent = book.title;
-  author.textContent = book.author;
-  pages.textContent = book.pages;
+  title.textContent = myLibrary[bookIndex].title;
+  author.textContent = myLibrary[bookIndex].author;
+  pages.textContent = myLibrary[bookIndex].pages;
   readLabel.textContent = "Have read book: ";
-  readToggle.checked = book.haveRead;
+  readToggle.checked = myLibrary[bookIndex].haveRead;
 
   cardContainer.appendChild(removeButton);
   cardContainer.appendChild(title);
@@ -74,7 +80,9 @@ function createBookCard(book) {
 }
 
 function updateBooks() {
-  for (const book of myLibrary) {
-    createBookCard(book);
+  bookContainer.textContent = "";
+
+  for (let i = 0; i < myLibrary.length; i++) {
+    createBookCard(i);
   }
 }

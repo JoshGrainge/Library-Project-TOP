@@ -99,6 +99,11 @@ header {
   border-radius: 25px;
 }
 
+.remove-btn:hover {
+  background-color: white;
+  cursor: pointer;
+}
+
 .modal > form {
   display: flex;
   flex-direction: column;
