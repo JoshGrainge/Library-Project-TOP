@@ -1,6 +1,10 @@
 const bookContainer = document.querySelector(".book-container");
 
 const submitBtn = document.querySelector(".submit-btn");
+const addBookBtn = document.querySelector(".add-book-btn");
+
+const modalContainer = document.querySelector(".modal-cotainer");
+const modal = document.querySelector(".modal");
 
 let myLibrary = [];
 
@@ -21,7 +25,7 @@ addBookToLibrary(
 
 updateBooks();
 
-// Disable submite button default functionality
+// Override submit button functionality
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -35,6 +39,10 @@ submitBtn.addEventListener("click", (e) => {
   addBookToLibrary(title, author, pages, haveRead == "on");
   updateBooks();
 });
+
+// Add event listeners
+submitBtn.addEventListener("click", toggleModal);
+addBookBtn.addEventListener("click", toggleModal);
 
 function Book(title, author, pages, haveRead) {
   this.title = title;
@@ -101,5 +109,15 @@ function updateBooks() {
   bookContainer.textContent = "";
   for (let i = 0; i < myLibrary.length; i++) {
     createBookCard(i);
+  }
+}
+
+function toggleModal() {
+  if (modal.classList.contains("active")) {
+    modalContainer.classList.remove("active");
+    modal.classList.remove("active");
+  } else {
+    modalContainer.classList.add("active");
+    modal.classList.add("active");
   }
 }
