@@ -1,5 +1,6 @@
 const bookContainer = document.querySelector(".book-container");
 
+const haveReadCheckbox = document.getElementById("have-read");
 const submitBtn = document.querySelector(".submit-btn");
 const addBookBtn = document.querySelector(".add-book-btn");
 
@@ -25,6 +26,9 @@ addBookToLibrary(
 
 updateBooks();
 
+// Add event listeners
+haveReadCheckbox.addEventListener("change", (e) => {});
+
 // Override submit button functionality
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -32,15 +36,14 @@ submitBtn.addEventListener("click", (e) => {
   const title = document.getElementById("title").value;
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
-  const haveRead = document.getElementById("have-read").value;
+  const haveRead = document.getElementById("have-read").checked;
 
   document.getElementById("add-book-form").reset();
 
-  addBookToLibrary(title, author, pages, haveRead == "on");
+  addBookToLibrary(title, author, pages, haveRead);
   updateBooks();
 });
 
-// Add event listeners
 submitBtn.addEventListener("click", toggleModal);
 addBookBtn.addEventListener("click", toggleModal);
 
